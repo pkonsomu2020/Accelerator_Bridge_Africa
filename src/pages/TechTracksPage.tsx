@@ -107,9 +107,9 @@ const TechTracksPage = () => {
       <ScrollToTop />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-16 px-6 bg-gradient-to-br from-blue-50 via-purple-50 to-teal-50">
+      <section className="pt-32 pb-16 px-6 bg-gradient-to-br from-blue-50 via-purple-50 to-teal-50 dark:from-blue-950/30 dark:via-purple-950/30 dark:to-teal-950/30">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl md:text-6xl font-black mb-6">
+          <h1 className="text-5xl md:text-6xl font-black mb-6 text-foreground">
             Four <span className="gradient-text-hero">Tech Tracks</span>
           </h1>
           <p className="text-xl text-muted-foreground leading-relaxed">
@@ -138,7 +138,7 @@ const TechTracksPage = () => {
                         className="w-full h-[400px] object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-tr from-primary/30 to-transparent"></div>
-                      <div className="absolute bottom-6 left-6 bg-white p-4 rounded-xl shadow-lg">
+                      <div className="absolute bottom-6 left-6 bg-card p-4 rounded-xl shadow-lg">
                         <Icon className="w-8 h-8 text-primary" />
                       </div>
                     </div>
@@ -183,9 +183,9 @@ const TechTracksPage = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-6 bg-gradient-to-br from-blue-50 to-purple-50">
+      <section className="py-20 px-6 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950/30 dark:to-purple-950/30">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-black mb-6">
+          <h2 className="text-4xl font-black mb-6 text-foreground">
             Ready to Choose Your <span className="gradient-text-hero">Track?</span>
           </h2>
           <p className="text-lg text-muted-foreground mb-8">

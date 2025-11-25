@@ -84,9 +84,9 @@ const Program = () => {
       <ScrollToTop />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-16 px-6 bg-gradient-to-br from-blue-50 via-purple-50 to-teal-50">
+      <section className="pt-32 pb-16 px-6 bg-gradient-to-br from-blue-50 via-purple-50 to-teal-50 dark:from-blue-950/30 dark:via-purple-950/30 dark:to-teal-950/30">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl md:text-6xl font-black mb-6">
+          <h1 className="text-5xl md:text-6xl font-black mb-6 text-foreground">
             Your <span className="gradient-text-hero">5-Week Journey</span>
           </h1>
           <p className="text-xl text-muted-foreground leading-relaxed">
@@ -113,7 +113,7 @@ const Program = () => {
                       alt={phase.title}
                       className="w-full h-[400px] object-cover"
                     />
-                    <div className="absolute top-6 left-6 bg-white px-4 py-2 rounded-full shadow-lg">
+                    <div className="absolute top-6 left-6 bg-card px-4 py-2 rounded-full shadow-lg">
                       <span className="text-sm font-bold text-primary">{phase.duration}</span>
                     </div>
                   </div>

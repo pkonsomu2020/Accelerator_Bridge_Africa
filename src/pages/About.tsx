@@ -24,9 +24,9 @@ const About = () => {
       <ScrollToTop />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-16 px-6 bg-gradient-to-br from-blue-50 via-purple-50 to-teal-50">
+      <section className="pt-32 pb-16 px-6 bg-gradient-to-br from-blue-50 via-purple-50 to-teal-50 dark:from-blue-950/30 dark:via-purple-950/30 dark:to-teal-950/30">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl md:text-6xl font-black mb-6">
+          <h1 className="text-5xl md:text-6xl font-black mb-6 text-foreground">
             About <span className="gradient-text-hero">The Accelerator Bridge</span>
           </h1>
           <p className="text-xl text-muted-foreground leading-relaxed">
@@ -64,10 +64,10 @@ const About = () => {
       </section>
 
       {/* Values Section */}
-      <section className="py-20 px-6 bg-gradient-to-br from-purple-50 to-blue-50">
+      <section className="py-20 px-6 bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-950/30 dark:to-blue-950/30">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-black mb-4">
+            <h2 className="text-4xl font-black mb-4 text-foreground">
               Our <span className="gradient-text-hero">Values</span>
             </h2>
             <p className="text-lg text-muted-foreground">
@@ -76,7 +76,7 @@ const About = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card className="p-8 bg-white hover:shadow-xl transition-shadow border-border text-center">
+            <Card className="p-8 bg-card hover:shadow-xl transition-shadow border-border text-center">
               <div className="mb-4 p-4 rounded-full bg-primary/10 inline-block">
                 <Target className="w-8 h-8 text-primary" />
               </div>
@@ -86,7 +86,7 @@ const About = () => {
               </p>
             </Card>
 
-            <Card className="p-8 bg-white hover:shadow-xl transition-shadow border-border text-center">
+            <Card className="p-8 bg-card hover:shadow-xl transition-shadow border-border text-center">
               <div className="mb-4 p-4 rounded-full bg-secondary/10 inline-block">
                 <Heart className="w-8 h-8 text-secondary" />
               </div>
@@ -96,7 +96,7 @@ const About = () => {
               </p>
             </Card>
 
-            <Card className="p-8 bg-white hover:shadow-xl transition-shadow border-border text-center">
+            <Card className="p-8 bg-card hover:shadow-xl transition-shadow border-border text-center">
               <div className="mb-4 p-4 rounded-full bg-accent/10 inline-block">
                 <Lightbulb className="w-8 h-8 text-accent" />
               </div>
@@ -106,7 +106,7 @@ const About = () => {
               </p>
             </Card>
 
-            <Card className="p-8 bg-white hover:shadow-xl transition-shadow border-border text-center">
+            <Card className="p-8 bg-card hover:shadow-xl transition-shadow border-border text-center">
               <div className="mb-4 p-4 rounded-full bg-primary/10 inline-block">
                 <Users2 className="w-8 h-8 text-primary" />
               </div>
@@ -142,11 +142,11 @@ const About = () => {
               for multiple career paths: freelancing, employment, or entrepreneurship.
             </p>
             <div className="grid grid-cols-2 gap-6 mt-8">
-              <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-6 rounded-xl">
+              <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950/50 dark:to-purple-950/50 p-6 rounded-xl border border-border">
                 <div className="text-3xl font-black gradient-text-hero mb-2">10+</div>
                 <div className="text-sm text-muted-foreground">Expert Mentors</div>
               </div>
-              <div className="bg-gradient-to-br from-purple-50 to-teal-50 p-6 rounded-xl">
+              <div className="bg-gradient-to-br from-purple-50 to-teal-50 dark:from-purple-950/50 dark:to-teal-950/50 p-6 rounded-xl border border-border">
                 <div className="text-3xl font-black gradient-text-hero mb-2">100+</div>
                 <div className="text-sm text-muted-foreground">Participants</div>
               </div>
@@ -156,10 +156,10 @@ const About = () => {
       </section>
 
       {/* Program Structure */}
-      <section className="py-20 px-6 bg-gradient-to-br from-blue-50 to-teal-50">
+      <section className="py-20 px-6 bg-gradient-to-br from-blue-50 to-teal-50 dark:from-blue-950/30 dark:to-teal-950/30">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-black mb-4">
+            <h2 className="text-4xl font-black mb-4 text-foreground">
               The <span className="gradient-text-hero">Accelerator Bridge</span> Difference
             </h2>
             <p className="text-lg text-muted-foreground">
@@ -168,7 +168,7 @@ const About = () => {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <Card className="p-8 bg-white border-border">
+            <Card className="p-8 bg-card border-border">
               <div className="text-5xl font-black gradient-text-hero mb-4">01</div>
               <h3 className="text-xl font-bold mb-3 text-foreground">Comprehensive</h3>
               <p className="text-muted-foreground leading-relaxed">
@@ -177,7 +177,7 @@ const About = () => {
               </p>
             </Card>
 
-            <Card className="p-8 bg-white border-border">
+            <Card className="p-8 bg-card border-border">
               <div className="text-5xl font-black gradient-text-hero mb-4">02</div>
               <h3 className="text-xl font-bold mb-3 text-foreground">Practical</h3>
               <p className="text-muted-foreground leading-relaxed">
@@ -186,7 +186,7 @@ const About = () => {
               </p>
             </Card>
 
-            <Card className="p-8 bg-white border-border">
+            <Card className="p-8 bg-card border-border">
               <div className="text-5xl font-black gradient-text-hero mb-4">03</div>
               <h3 className="text-xl font-bold mb-3 text-foreground">Connected</h3>
               <p className="text-muted-foreground leading-relaxed">
@@ -201,7 +201,7 @@ const About = () => {
       {/* CTA Section */}
       <section className="py-20 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-black mb-6">
+          <h2 className="text-4xl font-black mb-6 text-foreground">
             Ready to <span className="gradient-text-hero">Transform</span> Your Career?
           </h2>
           <p className="text-lg text-muted-foreground mb-8">

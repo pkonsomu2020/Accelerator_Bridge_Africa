@@ -73,9 +73,9 @@ const FeaturesPage = () => {
       <ScrollToTop />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-16 px-6 bg-gradient-to-br from-blue-50 via-purple-50 to-teal-50">
+      <section className="pt-32 pb-16 px-6 bg-gradient-to-br from-blue-50 via-purple-50 to-teal-50 dark:from-blue-950/30 dark:via-purple-950/30 dark:to-teal-950/30">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl md:text-6xl font-black mb-6">
+          <h1 className="text-5xl md:text-6xl font-black mb-6 text-foreground">
             Why Choose <span className="gradient-text-hero">The Accelerator Bridge</span>
           </h1>
           <p className="text-xl text-muted-foreground leading-relaxed">
@@ -103,7 +103,7 @@ const FeaturesPage = () => {
                       className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                    <div className="absolute bottom-4 left-4 bg-white p-3 rounded-xl shadow-lg">
+                    <div className="absolute bottom-4 left-4 bg-card p-3 rounded-xl shadow-lg">
                       <Icon className="w-6 h-6 text-primary" />
                     </div>
                   </div>
@@ -119,10 +119,10 @@ const FeaturesPage = () => {
       </section>
 
       {/* Additional Benefits */}
-      <section className="py-20 px-6 bg-gradient-to-br from-purple-50 to-blue-50">
+      <section className="py-20 px-6 bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-950/30 dark:to-blue-950/30">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-black mb-4">
+            <h2 className="text-4xl font-black mb-4 text-foreground">
               More <span className="gradient-text-hero">Benefits</span>
             </h2>
             <p className="text-lg text-muted-foreground">
@@ -134,7 +134,7 @@ const FeaturesPage = () => {
             {benefits.map((benefit) => {
               const Icon = benefit.icon;
               return (
-                <Card key={benefit.title} className="p-6 bg-white hover:shadow-lg transition-shadow border-border">
+                <Card key={benefit.title} className="p-6 bg-card hover:shadow-lg transition-shadow border-border">
                   <div className="mb-4 p-3 rounded-xl bg-primary/10 inline-block">
                     <Icon className="w-6 h-6 text-primary" />
                   </div>
@@ -151,13 +151,13 @@ const FeaturesPage = () => {
       <section className="py-20 px-6">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-black mb-4">
+            <h2 className="text-4xl font-black mb-4 text-foreground">
               What You'll <span className="gradient-text-hero">Receive</span>
             </h2>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-8 rounded-2xl">
+            <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950/50 dark:to-purple-950/50 p-8 rounded-2xl border border-border">
               <h3 className="text-2xl font-bold mb-6 text-foreground">During the Program</h3>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
@@ -183,7 +183,7 @@ const FeaturesPage = () => {
               </ul>
             </div>
 
-            <div className="bg-gradient-to-br from-teal-50 to-blue-50 p-8 rounded-2xl">
+            <div className="bg-gradient-to-br from-teal-50 to-blue-50 dark:from-teal-950/50 dark:to-blue-950/50 p-8 rounded-2xl border border-border">
               <h3 className="text-2xl font-bold mb-6 text-foreground">After Completion</h3>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
