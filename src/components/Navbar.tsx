@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -47,7 +48,7 @@ export const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-background/95 backdrop-blur-sm ${
         isScrolled ? "shadow-md border-b border-border py-3" : "py-5"
       }`}
     >
@@ -75,8 +76,9 @@ export const Navbar = () => {
             ))}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
+          {/* CTA Button & Theme Toggle */}
+          <div className="hidden md:flex items-center gap-3">
+            <ThemeToggle />
             <Button
               size="lg"
               className="gradient-button px-8 rounded-full font-semibold"
@@ -102,7 +104,7 @@ export const Navbar = () => {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden mt-6 bg-white rounded-2xl p-6 shadow-lg border border-border animate-fade-in-up">
+          <div className="md:hidden mt-6 bg-card rounded-2xl p-6 shadow-lg border border-border animate-fade-in-up">
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
                 <Link
@@ -116,9 +118,13 @@ export const Navbar = () => {
                   {link.label}
                 </Link>
               ))}
+              <div className="flex items-center gap-3 mt-2">
+                <ThemeToggle />
+                <span className="text-sm text-muted-foreground">Theme</span>
+              </div>
               <Button
                 size="lg"
-                className="gradient-button w-full rounded-full font-semibold mt-4"
+                className="gradient-button w-full rounded-full font-semibold mt-2"
                 onClick={handleGetTickets}
               >
                 Get Tickets

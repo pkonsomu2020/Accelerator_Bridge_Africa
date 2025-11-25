@@ -34,7 +34,7 @@ const tracks = [
 
 export const TechTracks = () => {
   return (
-    <section className="py-24 px-6 relative bg-gradient-to-br from-gray-50 to-blue-50">
+    <section className="py-24 px-6 relative bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-950/30 dark:to-blue-950/30">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-5xl md:text-6xl font-black mb-6 text-foreground">
@@ -51,7 +51,7 @@ export const TechTracks = () => {
             return (
               <Card
                 key={track.title}
-                className="overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer group border-border bg-white"
+                className="overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer group border-border bg-card"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className="relative h-48 overflow-hidden">

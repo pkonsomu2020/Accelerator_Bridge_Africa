@@ -38,12 +38,12 @@ export const Hero = () => {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden px-6 py-20 pt-32 bg-gradient-to-br from-blue-50 via-purple-50 to-teal-50">
+    <section className="relative min-h-screen flex items-center overflow-hidden px-6 py-20 pt-32 bg-gradient-to-br from-blue-50 via-purple-50 to-teal-50 dark:from-blue-950/30 dark:via-purple-950/30 dark:to-teal-950/30">
       <div className="relative max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center z-10">
         {/* Left Content */}
         <div className="text-left">
           {/* Event Info Badge */}
-          <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-white border border-primary/20 mb-6 animate-fade-in-up shadow-sm">
+          <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-card border border-primary/20 mb-6 animate-fade-in-up shadow-sm">
             <Calendar className="w-4 h-4 text-primary" />
             <span className="text-sm font-medium text-foreground">5-Week Intensive Program</span>
             <span className="text-muted-foreground">|</span>
@@ -83,15 +83,15 @@ export const Hero = () => {
 
           {/* Stats */}
           <div className="grid grid-cols-3 gap-4 mt-12 animate-fade-in-up" style={{ animationDelay: "0.5s" }}>
-            <div className="bg-white p-6 rounded-xl border border-border shadow-sm hover:shadow-md transition-shadow">
+            <div className="bg-card p-6 rounded-xl border border-border shadow-sm hover:shadow-md transition-shadow">
               <div className="text-4xl font-black gradient-text-hero">5</div>
               <div className="text-xs text-muted-foreground mt-2 font-medium uppercase tracking-wide">Weeks</div>
             </div>
-            <div className="bg-white p-6 rounded-xl border border-border shadow-sm hover:shadow-md transition-shadow">
+            <div className="bg-card p-6 rounded-xl border border-border shadow-sm hover:shadow-md transition-shadow">
               <div className="text-4xl font-black gradient-text-hero">4</div>
               <div className="text-xs text-muted-foreground mt-2 font-medium uppercase tracking-wide">Tech Tracks</div>
             </div>
-            <div className="bg-white p-6 rounded-xl border border-border shadow-sm hover:shadow-md transition-shadow">
+            <div className="bg-card p-6 rounded-xl border border-border shadow-sm hover:shadow-md transition-shadow">
               <div className="text-4xl font-black gradient-text-hero">10+</div>
               <div className="text-xs text-muted-foreground mt-2 font-medium uppercase tracking-wide">Mentors</div>
             </div>
@@ -138,7 +138,7 @@ export const Hero = () => {
           </div>
 
           {/* Animated Floating Badge */}
-          <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-xl border border-border animate-bounce-slow">
+          <div className="absolute -bottom-6 -left-6 bg-card p-6 rounded-2xl shadow-xl border border-border animate-bounce-slow">
             <div className="flex items-center gap-3">
               <div className="relative">
                 <Sparkles className="w-8 h-8 text-primary animate-pulse" />

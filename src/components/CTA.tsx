@@ -34,9 +34,9 @@ export const CTA = () => {
   };
 
   return (
-    <section className="py-24 px-6 relative bg-gradient-to-br from-blue-50 via-purple-50 to-teal-50">
+    <section className="py-24 px-6 relative bg-gradient-to-br from-blue-50 via-purple-50 to-teal-50 dark:from-blue-950/30 dark:via-purple-950/30 dark:to-teal-950/30">
       <div className="max-w-4xl mx-auto">
-        <div className="bg-white p-12 md:p-16 rounded-3xl text-center relative overflow-hidden shadow-xl border border-border">
+        <div className="bg-card p-12 md:p-16 rounded-3xl text-center relative overflow-hidden shadow-xl border border-border">
           <div className="relative z-10">
             <h2 className="text-4xl md:text-5xl font-black mb-6 text-foreground">
               Ready to <span className="gradient-text-hero">Accelerate</span> Your Career?

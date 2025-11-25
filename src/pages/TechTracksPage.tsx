@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import { Card } from "@/components/ui/card";
 import { Server, Cloud, Database, Brain, CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -101,8 +102,9 @@ const TechTracksPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Navbar />
+      <ScrollToTop />
       
       {/* Hero Section */}
       <section className="pt-32 pb-16 px-6 bg-gradient-to-br from-blue-50 via-purple-50 to-teal-50">

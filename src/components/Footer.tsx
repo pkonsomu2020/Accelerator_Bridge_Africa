@@ -3,7 +3,7 @@ import { Mail, Phone, MapPin, Calendar, Clock } from "lucide-react";
 
 export const Footer = () => {
   return (
-    <footer className="py-16 px-6 border-t border-border bg-gray-50">
+    <footer className="py-16 px-6 border-t border-border bg-muted/30">
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-12 mb-12">
           {/* Brand */}

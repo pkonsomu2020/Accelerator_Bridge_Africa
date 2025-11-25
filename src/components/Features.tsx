@@ -42,7 +42,7 @@ const features = [
 
 export const Features = () => {
   return (
-    <section className="py-24 px-6 relative bg-white">
+    <section className="py-24 px-6 relative bg-background">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-5xl md:text-6xl font-black mb-6 text-foreground">
@@ -59,7 +59,7 @@ export const Features = () => {
             return (
               <Card
                 key={feature.title}
-                className="overflow-hidden hover:shadow-xl transition-all duration-300 border-border bg-white"
+                className="overflow-hidden hover:shadow-xl transition-all duration-300 border-border bg-card"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className="relative h-48 overflow-hidden">

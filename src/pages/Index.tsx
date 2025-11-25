@@ -7,6 +7,7 @@ import { Pricing } from "@/components/Pricing";
 import { Partners } from "@/components/Partners";
 import { CTA } from "@/components/CTA";
 import { Footer } from "@/components/Footer";
+import { ScrollToTop } from "@/components/ScrollToTop";
 
 const Index = () => {
   return (
@@ -28,6 +29,7 @@ const Index = () => {
       <Partners />
       <CTA />
       <Footer />
+      <ScrollToTop />
     </div>
   );
 };

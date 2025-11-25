@@ -77,7 +77,7 @@ const pricingPackages = [
 
 export const Pricing = () => {
   return (
-    <section className="py-24 px-6 bg-gradient-to-br from-gray-50 to-blue-50">
+    <section className="py-24 px-6 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-950/30 dark:to-blue-950/30">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
@@ -96,7 +96,7 @@ export const Pricing = () => {
             return (
               <Card
                 key={pkg.name}
-                className={`relative overflow-hidden bg-white border-2 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 ${
+                className={`relative overflow-hidden bg-card border-2 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 ${
                   pkg.popular ? "border-primary shadow-xl scale-105" : "border-border"
                 }`}
               >
