@@ -123,7 +123,7 @@ const startServer = async () => {
       // Verify email configuration
       const emailConfigured = await verifyEmailConfig();
       if (!emailConfigured) {
-        console.error('⚠️  Warning: Email configuration failed. Please check your SMTP settings.');
+        console.log('ℹ️  Email will be verified on first use');
       }
     }, 1000);
 

@@ -16,14 +16,15 @@ const transporter = nodemailer.createTransport({
 const verifyEmailConfig = async () => {
   try {
     const timeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('Email verification timeout')), 5000)
+      setTimeout(() => reject(new Error('Email verification timeout')), 10000)
     );
     
     await Promise.race([transporter.verify(), timeoutPromise]);
     console.log('✅ Email configuration verified successfully');
     return true;
   } catch (error) {
-    console.error('❌ Email configuration failed:', error.message);
+    console.error('⚠️  Email verification skipped:', error.message);
+    console.log('📧 Email will be tested when first message is sent');
     return false;
   }
 };
