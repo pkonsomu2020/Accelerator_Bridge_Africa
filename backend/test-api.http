@@ -1,0 +1,56 @@
+### Test API Endpoints
+### Use REST Client extension in VS Code or import to Postman
+
+### Health Check
+GET http://localhost:5000/api/health
+
+###
+
+### Submit Contact Form
+POST http://localhost:5000/api/contact
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "description": "I'm interested in learning more about The Accelerator Bridge program. Can you provide more information about the application process?"
+}
+
+###
+
+### Get All Contact Forms (Admin)
+GET http://localhost:5000/api/contact
+
+###
+
+### Submit Partnership Form (without file)
+POST http://localhost:5000/api/partnership
+Content-Type: application/json
+
+{
+  "organizationName": "Tech Innovators Inc",
+  "contactPersonName": "Jane Smith",
+  "email": "jane.smith@techinnovators.com",
+  "phoneNumber": "+254 712 345 678",
+  "organizationDescription": "We are a leading technology company specializing in AI and machine learning solutions. We have been in business for 10 years and work with Fortune 500 companies.",
+  "partnershipDescription": "We would like to sponsor the program and provide mentorship to participants in the Machine Learning track. We can also offer internship opportunities to top performers.",
+  "additionalInfo": "We have a team of 5 senior engineers who are willing to volunteer as mentors."
+}
+
+###
+
+### Get All Partnership Forms (Admin)
+GET http://localhost:5000/api/partnership
+
+###
+
+### Test with file upload (use Postman or curl for this)
+# curl -X POST http://localhost:5000/api/partnership \
+#   -F "organizationName=Test Company" \
+#   -F "contactPersonName=Test Person" \
+#   -F "email=test@company.com" \
+#   -F "phoneNumber=+254 XXX XXX XXX" \
+#   -F "organizationDescription=Test description" \
+#   -F "partnershipDescription=Test partnership description" \
+#   -F "additionalInfo=Additional info" \
+#   -F "logo=@/path/to/your/logo.png"
