@@ -14,13 +14,45 @@ const Contact = () => {
     email: "",
     description: ""
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: 'success' | 'error' | null;
+    message: string;
+  }>({ type: null, message: '' });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log("Form submitted:", formData);
-    // Reset form
-    setFormData({ name: "", email: "", description: "" });
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: '' });
+
+    try {
+      const response = await fetch('http://localhost:5000/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus({
+          type: 'success',
+          message: 'Thank you for your message! We\'ll get back to you soon.'
+        });
+        setFormData({ name: "", email: "", description: "" });
+      } else {
+        throw new Error(result.message || 'Failed to submit form');
+      }
+    } catch (error) {
+      setSubmitStatus({
+        type: 'error',
+        message: error instanceof Error ? error.message : 'Failed to submit form. Please try again.'
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -75,15 +107,23 @@ const Contact = () => {
               <div className="mb-4 p-4 rounded-full bg-accent/10 inline-block">
                 <MessageCircle className="w-8 h-8 text-accent" />
               </div>
-              <h3 className="text-lg font-bold mb-2 text-foreground">WhatsApp</h3>
-              <a 
-                href="https://chat.whatsapp.com/FxUhsJiEOiB8FHTIIKhfGG?mode=ems_copy_t" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-sm text-muted-foreground hover:text-primary transition-colors"
-              >
-                Join Community
-              </a>
+              <h3 className="text-lg font-bold mb-3 text-foreground">WhatsApp Communities</h3>
+              <div className="space-y-2">
+                <Button
+                  size="sm"
+                  className="w-full gradient-button text-white rounded-full font-semibold"
+                  onClick={() => window.open("https://chat.whatsapp.com/Go1a5m0MwSq0HiOYDGVnf7?mode=hqrt2", "_blank")}
+                >
+                  Secretstartups
+                </Button>
+                <Button
+                  size="sm"
+                  className="w-full gradient-button text-white rounded-full font-semibold"
+                  onClick={() => window.open("https://chat.whatsapp.com/FxUhsJiEOiB8FHTIIKhfGG?mode=ems_copy_t", "_blank")}
+                >
+                  Skillyme
+                </Button>
+              </div>
             </Card>
 
             <Card className="p-6 bg-card hover:shadow-lg transition-shadow border-border text-center">
@@ -108,6 +148,16 @@ const Contact = () => {
                   Fill out the form below and we'll get back to you as soon as possible.
                 </p>
               </div>
+
+              {submitStatus.type && (
+                <div className={`p-4 rounded-lg ${
+                  submitStatus.type === 'success' 
+                    ? 'bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-200 border border-green-200 dark:border-green-800' 
+                    : 'bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-200 border border-red-200 dark:border-red-800'
+                }`}>
+                  {submitStatus.message}
+                </div>
+              )}
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
@@ -159,10 +209,20 @@ const Contact = () => {
 
                 <Button
                   type="submit"
-                  className="w-full gradient-button text-white rounded-full font-semibold py-6 text-lg"
+                  disabled={isSubmitting}
+                  className="w-full gradient-button text-white rounded-full font-semibold py-6 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <Send className="w-5 h-5 mr-2" />
-                  Send Message
+                  {isSubmitting ? (
+                    <>
+                      <span className="animate-spin mr-2">⏳</span>
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-5 h-5 mr-2" />
+                      Send Message
+                    </>
+                  )}
                 </Button>
               </form>
             </Card>
@@ -180,15 +240,25 @@ const Contact = () => {
             Connect with fellow participants, mentors, and industry professionals. 
             Stay updated on program announcements, events, and opportunities.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              size="lg"
-              className="gradient-button text-white px-8 rounded-full font-semibold"
-              onClick={() => window.open("https://chat.whatsapp.com/FxUhsJiEOiB8FHTIIKhfGG?mode=ems_copy_t", "_blank")}
-            >
-              <MessageCircle className="w-5 h-5 mr-2" />
-              Join WhatsApp Community
-            </Button>
+          <div className="flex flex-col gap-4 max-w-2xl mx-auto">
+            <div className="grid sm:grid-cols-2 gap-4">
+              <Button
+                size="lg"
+                className="gradient-button text-white px-8 rounded-full font-semibold"
+                onClick={() => window.open("https://chat.whatsapp.com/Go1a5m0MwSq0HiOYDGVnf7?mode=hqrt2", "_blank")}
+              >
+                <MessageCircle className="w-5 h-5 mr-2" />
+                Secretstartups Community
+              </Button>
+              <Button
+                size="lg"
+                className="gradient-button text-white px-8 rounded-full font-semibold"
+                onClick={() => window.open("https://chat.whatsapp.com/FxUhsJiEOiB8FHTIIKhfGG?mode=ems_copy_t", "_blank")}
+              >
+                <MessageCircle className="w-5 h-5 mr-2" />
+                Skillyme Community
+              </Button>
+            </div>
             <Button
               size="lg"
               variant="outline"

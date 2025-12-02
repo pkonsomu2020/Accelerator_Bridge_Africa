@@ -78,7 +78,7 @@ export const Footer = () => {
                 <div>
                   <p className="font-semibold text-foreground">Program Dates</p>
                   <p>5-Week Intensive</p>
-                  <p className="text-xs mt-1">Starting January 2025</p>
+                  <p className="text-xs mt-1">2nd February - 8th March 2026</p>
                 </div>
               </li>
               <li className="flex items-start gap-3">
