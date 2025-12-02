@@ -19,22 +19,87 @@ const Partnerships = () => {
     partnershipDescription: "",
     additionalInfo: ""
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: 'success' | 'error' | null;
+    message: string;
+  }>({ type: null, message: '' });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log("Partnership form submitted:", formData);
-    // Reset form
-    setFormData({
-      organizationName: "",
-      contactPersonName: "",
-      email: "",
-      phoneNumber: "",
-      organizationDescription: "",
-      logo: null,
-      partnershipDescription: "",
-      additionalInfo: ""
-    });
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: '' });
+
+    try {
+      const formDataToSend = new FormData();
+      formDataToSend.append('organizationName', formData.organizationName);
+      formDataToSend.append('contactPersonName', formData.contactPersonName);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('phoneNumber', formData.phoneNumber);
+      formDataToSend.append('organizationDescription', formData.organizationDescription);
+      formDataToSend.append('partnershipDescription', formData.partnershipDescription);
+      formDataToSend.append('additionalInfo', formData.additionalInfo);
+      
+      if (formData.logo) {
+        formDataToSend.append('logo', formData.logo);
+      }
+
+      const API_URL = import.meta.env.VITE_API_URL || 'https://accelerator-bridge-api.onrender.com/api';
+      const response = await fetch(`${API_URL}/partnership`, {
+        method: 'POST',
+        body: formDataToSend,
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus({
+          type: 'success',
+          message: 'Thank you for your partnership interest! We\'ll review your submission and get back to you within 2-3 business days.'
+        });
+        setFormData({
+          organizationName: "",
+          contactPersonName: "",
+          email: "",
+          phoneNumber: "",
+          organizationDescription: "",
+          logo: null,
+          partnershipDescription: "",
+          additionalInfo: ""
+        });
+        // Reset file input
+        const fileInput = document.getElementById('logo') as HTMLInputElement;
+        if (fileInput) fileInput.value = '';
+        
+        // Scroll to success message
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        throw new Error(result.message || 'Failed to submit form');
+      }
+    } catch (error) {
+      let errorMessage = 'Failed to submit form. Please try again.';
+      
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+      
+      // Handle specific error cases
+      if (errorMessage.includes('File size too large')) {
+        errorMessage = 'Your logo file is too large. Please upload an image smaller than 200MB.';
+      } else if (errorMessage.includes('Failed to fetch')) {
+        errorMessage = 'Cannot connect to server. Please make sure the backend is running.';
+      }
+      
+      setSubmitStatus({
+        type: 'error',
+        message: errorMessage
+      });
+      
+      // Scroll to error message
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -46,9 +111,36 @@ const Partnerships = () => {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      
+      // Check file size (200MB = 200 * 1024 * 1024 bytes)
+      const maxSize = 200 * 1024 * 1024;
+      if (file.size > maxSize) {
+        setSubmitStatus({
+          type: 'error',
+          message: 'File size too large. Maximum size is 200MB. Please choose a smaller image.'
+        });
+        e.target.value = ''; // Reset file input
+        return;
+      }
+      
+      // Check file type
+      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/svg+xml'];
+      if (!allowedTypes.includes(file.type)) {
+        setSubmitStatus({
+          type: 'error',
+          message: 'Invalid file type. Please upload an image file (PNG, JPG, GIF, or SVG).'
+        });
+        e.target.value = ''; // Reset file input
+        return;
+      }
+      
+      // Clear any previous errors
+      setSubmitStatus({ type: null, message: '' });
+      
       setFormData({
         ...formData,
-        logo: e.target.files[0]
+        logo: file
       });
     }
   };
@@ -188,6 +280,16 @@ const Partnerships = () => {
               </p>
             </div>
 
+            {submitStatus.type && (
+              <div className={`p-4 rounded-lg ${
+                submitStatus.type === 'success' 
+                  ? 'bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-200 border border-green-200 dark:border-green-800' 
+                  : 'bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-200 border border-red-200 dark:border-red-800'
+              }`}>
+                {submitStatus.message}
+              </div>
+            )}
+
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
@@ -279,15 +381,20 @@ const Partnerships = () => {
                     id="logo"
                     name="logo"
                     type="file"
-                    accept="image/*"
+                    accept="image/png,image/jpeg,image/jpg,image/gif,image/svg+xml"
                     onChange={handleFileChange}
                     className="w-full"
                   />
                   <Upload className="w-5 h-5 text-muted-foreground" />
                 </div>
                 <p className="text-xs text-muted-foreground mt-1">
-                  Accepted formats: PNG, JPG, SVG (Max 5MB)
+                  Accepted formats: PNG, JPG, GIF, SVG (Max 200MB)
                 </p>
+                {formData.logo && (
+                  <p className="text-xs text-primary mt-1">
+                    ✓ Selected: {formData.logo.name} ({(formData.logo.size / 1024 / 1024).toFixed(2)} MB)
+                  </p>
+                )}
               </div>
 
               <div>
@@ -321,10 +428,20 @@ const Partnerships = () => {
 
               <Button
                 type="submit"
-                className="w-full gradient-button text-white rounded-full font-semibold py-6 text-lg"
+                disabled={isSubmitting}
+                className="w-full gradient-button text-white rounded-full font-semibold py-6 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <Send className="w-5 h-5 mr-2" />
-                Submit Partnership Request
+                {isSubmitting ? (
+                  <>
+                    <span className="animate-spin mr-2">⏳</span>
+                    Submitting...
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-5 h-5 mr-2" />
+                    Submit Partnership Request
+                  </>
+                )}
               </Button>
             </form>
           </Card>

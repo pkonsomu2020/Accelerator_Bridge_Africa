@@ -26,7 +26,8 @@ const Contact = () => {
     setSubmitStatus({ type: null, message: '' });
 
     try {
-      const response = await fetch('http://localhost:5000/api/contact', {
+      const API_URL = import.meta.env.VITE_API_URL || 'https://accelerator-bridge-api.onrender.com/api';
+      const response = await fetch(`${API_URL}/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
