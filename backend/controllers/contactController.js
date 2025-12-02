@@ -53,39 +53,7 @@ const submitContactForm = async (req, res) => {
       `
     };
 
-    await transporter.sendMail(mailOptions);
-
-    // Send confirmation email to user
-    const confirmationMailOptions = {
-      from: process.env.EMAIL_FROM,
-      to: email,
-      subject: 'Thank you for contacting The Accelerator Bridge',
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #4F46E5; border-bottom: 2px solid #4F46E5; padding-bottom: 10px;">
-            Thank You for Reaching Out!
-          </h2>
-          <p>Dear ${name},</p>
-          <p>Thank you for contacting The Accelerator Bridge. We have received your message and will get back to you as soon as possible.</p>
-          <div style="background-color: #f3f4f6; padding: 15px; border-radius: 5px; margin: 20px 0;">
-            <p><strong>Your Message:</strong></p>
-            <p>${description.replace(/\n/g, '<br>')}</p>
-          </div>
-          <p>If you have any urgent questions, feel free to reach out to us directly at:</p>
-          <ul>
-            <li>Email: community@secretstartups.org</li>
-            <li>Phone: +254 111 566445</li>
-          </ul>
-          <p>Best regards,<br>The Accelerator Bridge Team</p>
-          <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #6b7280; font-size: 12px;">
-            <p>© 2025 SkillME X SecretStartups - The Accelerator Bridge</p>
-          </div>
-        </div>
-      `
-    };
-
-    await transporter.sendMail(confirmationMailOptions);
-
+    // Respond immediately to frontend
     res.status(201).json({
       success: true,
       message: 'Contact form submitted successfully',
@@ -93,6 +61,50 @@ const submitContactForm = async (req, res) => {
         id: insertedRecord.id,
         name,
         email
+      }
+    });
+
+    // Send emails asynchronously (don't wait for them)
+    setImmediate(async () => {
+      try {
+        // Send email notification to admin
+        await transporter.sendMail(mailOptions);
+        console.log('✅ Admin notification email sent for contact:', name);
+
+        // Send confirmation email to user
+        const confirmationMailOptions = {
+          from: process.env.EMAIL_FROM,
+          to: email,
+          subject: 'Thank you for contacting The Accelerator Bridge',
+          html: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+              <h2 style="color: #4F46E5; border-bottom: 2px solid #4F46E5; padding-bottom: 10px;">
+                Thank You for Reaching Out!
+              </h2>
+              <p>Dear ${name},</p>
+              <p>Thank you for contacting The Accelerator Bridge. We have received your message and will get back to you as soon as possible.</p>
+              <div style="background-color: #f3f4f6; padding: 15px; border-radius: 5px; margin: 20px 0;">
+                <p><strong>Your Message:</strong></p>
+                <p>${description.replace(/\n/g, '<br>')}</p>
+              </div>
+              <p>If you have any urgent questions, feel free to reach out to us directly at:</p>
+              <ul>
+                <li>Email: community@secretstartups.org</li>
+                <li>Phone: +254 111 566445</li>
+              </ul>
+              <p>Best regards,<br>The Accelerator Bridge Team</p>
+              <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #6b7280; font-size: 12px;">
+                <p>© 2025 SkillME X SecretStartups - The Accelerator Bridge</p>
+              </div>
+            </div>
+          `
+        };
+
+        await transporter.sendMail(confirmationMailOptions);
+        console.log('✅ Confirmation email sent to user:', email);
+      } catch (emailError) {
+        console.error('❌ Error sending emails:', emailError.message);
+        // Don't throw - emails are not critical for form submission
       }
     });
 

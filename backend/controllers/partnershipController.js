@@ -101,55 +101,7 @@ const submitPartnershipForm = async (req, res) => {
       attachments
     };
 
-    await transporter.sendMail(mailOptions);
-
-    // Send confirmation email to partner
-    const confirmationMailOptions = {
-      from: process.env.EMAIL_FROM,
-      to: email,
-      subject: 'Thank you for your Partnership Interest - The Accelerator Bridge',
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #4F46E5; border-bottom: 2px solid #4F46E5; padding-bottom: 10px;">
-            Thank You for Your Partnership Interest!
-          </h2>
-          <p>Dear ${contactPersonName || 'Partner'},</p>
-          <p>Thank you for expressing interest in partnering with The Accelerator Bridge. We are excited about the possibility of working together!</p>
-          
-          <div style="background-color: #f3f4f6; padding: 15px; border-radius: 5px; margin: 20px 0;">
-            <h3 style="color: #1F2937; margin-top: 0;">Your Submission Details</h3>
-            <p><strong>Organization:</strong> ${organizationName}</p>
-            <p><strong>Email:</strong> ${email}</p>
-            ${phoneNumber ? `<p><strong>Phone:</strong> ${phoneNumber}</p>` : ''}
-          </div>
-
-          <p>Our team will review your partnership request and get back to you within 2-3 business days to discuss the next steps.</p>
-          
-          <h3 style="color: #1F2937;">What Happens Next?</h3>
-          <ol style="line-height: 1.8;">
-            <li>Our team reviews your partnership proposal</li>
-            <li>We'll schedule a call to discuss opportunities</li>
-            <li>We'll work together to create a mutually beneficial partnership</li>
-          </ol>
-
-          <p>If you have any immediate questions, please don't hesitate to reach out:</p>
-          <ul>
-            <li>Email: community@secretstartups.org</li>
-            <li>Phone: +254 111 566445</li>
-          </ul>
-
-          <p>We look forward to potentially partnering with you!</p>
-          <p>Best regards,<br>The Accelerator Bridge Team</p>
-          
-          <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #6b7280; font-size: 12px;">
-            <p>© 2025 SkillME X SecretStartups - The Accelerator Bridge</p>
-          </div>
-        </div>
-      `
-    };
-
-    await transporter.sendMail(confirmationMailOptions);
-
+    // Respond immediately to frontend
     res.status(201).json({
       success: true,
       message: 'Partnership form submitted successfully',
@@ -158,6 +110,66 @@ const submitPartnershipForm = async (req, res) => {
         organizationName,
         email,
         logoPath
+      }
+    });
+
+    // Send emails asynchronously (don't wait for them)
+    setImmediate(async () => {
+      try {
+        // Send email notification to admin
+        await transporter.sendMail(mailOptions);
+        console.log('✅ Admin notification email sent for partnership:', organizationName);
+
+        // Send confirmation email to partner
+        const confirmationMailOptions = {
+          from: process.env.EMAIL_FROM,
+          to: email,
+          subject: 'Thank you for your Partnership Interest - The Accelerator Bridge',
+          html: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+              <h2 style="color: #4F46E5; border-bottom: 2px solid #4F46E5; padding-bottom: 10px;">
+                Thank You for Your Partnership Interest!
+              </h2>
+              <p>Dear ${contactPersonName || 'Partner'},</p>
+              <p>Thank you for expressing interest in partnering with The Accelerator Bridge. We are excited about the possibility of working together!</p>
+              
+              <div style="background-color: #f3f4f6; padding: 15px; border-radius: 5px; margin: 20px 0;">
+                <h3 style="color: #1F2937; margin-top: 0;">Your Submission Details</h3>
+                <p><strong>Organization:</strong> ${organizationName}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                ${phoneNumber ? `<p><strong>Phone:</strong> ${phoneNumber}</p>` : ''}
+              </div>
+
+              <p>Our team will review your partnership request and get back to you within 2-3 business days to discuss the next steps.</p>
+              
+              <h3 style="color: #1F2937;">What Happens Next?</h3>
+              <ol style="line-height: 1.8;">
+                <li>Our team reviews your partnership proposal</li>
+                <li>We'll schedule a call to discuss opportunities</li>
+                <li>We'll work together to create a mutually beneficial partnership</li>
+              </ol>
+
+              <p>If you have any immediate questions, please don't hesitate to reach out:</p>
+              <ul>
+                <li>Email: community@secretstartups.org</li>
+                <li>Phone: +254 111 566445</li>
+              </ul>
+
+              <p>We look forward to potentially partnering with you!</p>
+              <p>Best regards,<br>The Accelerator Bridge Team</p>
+              
+              <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #6b7280; font-size: 12px;">
+                <p>© 2025 SkillME X SecretStartups - The Accelerator Bridge</p>
+              </div>
+            </div>
+          `
+        };
+
+        await transporter.sendMail(confirmationMailOptions);
+        console.log('✅ Confirmation email sent to partner:', email);
+      } catch (emailError) {
+        console.error('❌ Error sending emails:', emailError.message);
+        // Don't throw - emails are not critical for form submission
       }
     });
 
