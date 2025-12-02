@@ -5,7 +5,7 @@ const tracks = [
   {
     title: "Software Engineering",
     icon: Server,
-    description: "Full-stack development, system design, and best practices for building scalable applications.",
+    description: "Backend, Frontend, Mobile development, Machine learning and Artificial Intelligence(AI).",
     gradient: "from-blue-100 to-blue-50",
     image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=300&fit=crop"
   },
@@ -19,7 +19,7 @@ const tracks = [
   {
     title: "Data Engineering",
     icon: Database,
-    description: "Data pipelines, ETL processes, database design, and analytics infrastructure.",
+    description: "Data pipelines, ETL processes, database design, Data Science, Data Analytics and infrastructure.",
     gradient: "from-teal-100 to-teal-50",
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop"
   },

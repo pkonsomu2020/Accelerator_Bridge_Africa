@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, MapPin, Calendar, Sparkles } from "lucide-react";
 
@@ -24,6 +25,7 @@ const heroImages = [
 export const Hero = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -36,6 +38,17 @@ export const Hero = () => {
 
     return () => clearInterval(interval);
   }, []);
+
+  const handleJoinProgram = () => {
+    const pricingSection = document.getElementById("pricing");
+    if (pricingSection) {
+      pricingSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  const handleLearnMore = () => {
+    navigate("/about");
+  };
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden px-6 py-20 pt-32 bg-gradient-to-br from-blue-50 via-purple-50 to-teal-50 dark:from-blue-950/30 dark:via-purple-950/30 dark:to-teal-950/30">
@@ -72,11 +85,20 @@ export const Hero = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
-            <Button size="lg" className="gradient-button px-8 py-6 text-base rounded-full font-semibold group shadow-lg">
+            <Button 
+              size="lg" 
+              className="gradient-button px-8 py-6 text-base rounded-full font-semibold group shadow-lg"
+              onClick={handleJoinProgram}
+            >
               Join the Program
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Button>
-            <Button size="lg" variant="outline" className="border-2 border-primary/40 px-8 py-6 text-base rounded-full hover:bg-primary/5 font-semibold">
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="border-2 border-primary/40 px-8 py-6 text-base rounded-full hover:bg-primary/5 font-semibold"
+              onClick={handleLearnMore}
+            >
               Learn More
             </Button>
           </div>

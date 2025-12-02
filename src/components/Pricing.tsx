@@ -4,7 +4,7 @@ import { Check, Sparkles, Users, Ticket } from "lucide-react";
 
 const pricingPackages = [
   {
-    name: "Normal Package",
+    name: "Individual Pass",
     price: "1,500",
     currency: "KES",
     description: "Full access to the 5-week program",
@@ -17,32 +17,14 @@ const pricingPackages = [
       "Certificate of completion"
     ],
     icon: Ticket,
-    popular: false,
-    badge: null
-  },
-  {
-    name: "Coupon Code Package",
-    price: "1,300",
-    currency: "KES",
-    description: "Special discounted rate with coupon",
-    features: [
-      "Complete 5-week program access",
-      "All soft skills training",
-      "Technical deep-dive workshops",
-      "Hackathon participation",
-      "Career launch sessions",
-      "Certificate of completion",
-      "Save KES 200 with coupon code"
-    ],
-    icon: Sparkles,
     popular: true,
     badge: "Best Value"
   },
   {
-    name: "Group of 5",
+    name: "Team Package",
     price: "6,000",
     currency: "KES",
-    description: "Bring your team and save together",
+    description: "Bring your team of 5 and save together",
     features: [
       "5 participants included",
       "Complete program access for all",
@@ -90,7 +72,7 @@ export const Pricing = () => {
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {pricingPackages.map((pkg, index) => {
             const Icon = pkg.icon;
             return (
@@ -148,11 +130,7 @@ export const Pricing = () => {
 
                   {/* CTA Button */}
                   <Button
-                    className={`w-full rounded-full font-semibold ${
-                      pkg.popular
-                        ? "gradient-button"
-                        : "bg-foreground hover:bg-foreground/90 text-white"
-                    }`}
+                    className="w-full rounded-full font-semibold gradient-button text-white"
                   >
                     Get Tickets
                   </Button>

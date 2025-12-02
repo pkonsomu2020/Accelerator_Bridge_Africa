@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { Rocket, Users, Code, Trophy, Briefcase } from "lucide-react";
+import { Rocket, Users, Code, Trophy, Briefcase, Lightbulb } from "lucide-react";
 
 const phases = [
   {
@@ -42,6 +42,14 @@ const phases = [
     color: "text-secondary",
     image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=400&h=300&fit=crop"
   },
+  {
+    number: "06",
+    title: "Founder and Incubator Talks",
+    icon: Lightbulb,
+    description: "Gain insights from successful founders and incubator leaders who share their entrepreneurial journey, startup strategies, and lessons learned from building and scaling businesses.",
+    color: "text-accent",
+    image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=400&h=300&fit=crop"
+  },
 ];
 
 export const Journey = () => {
@@ -77,7 +85,7 @@ export const Journey = () => {
                   <div className="absolute top-4 left-4 text-5xl font-black text-white/30">
                     {phase.number}
                   </div>
-                  <div className="absolute bottom-4 left-4 bg-white p-3 rounded-xl shadow-lg">
+                  <div className="absolute bottom-4 left-4 bg-card p-3 rounded-xl shadow-lg">
                     <Icon className={`w-6 h-6 ${phase.color}`} />
                   </div>
                 </div>

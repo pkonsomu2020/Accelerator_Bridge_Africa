@@ -40,10 +40,13 @@ export const Navbar = () => {
   };
 
   const navLinks = [
-    { to: "/program", label: "Program" },
-    { to: "/tech-tracks", label: "Tech Tracks" },
-    { to: "/features", label: "Features" },
+    { to: "/", label: "Home" },
     { to: "/about", label: "About" },
+    { to: "/program", label: "Program" },
+    // { to: "/tech-tracks", label: "Tech Tracks" },
+    { to: "/features", label: "Features" },
+    { to: "/contact", label: "Contact" },
+    { to: "/partnerships", label: "Partnerships" },
   ];
 
   return (
