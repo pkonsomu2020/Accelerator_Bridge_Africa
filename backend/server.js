@@ -93,23 +93,11 @@ app.use((req, res) => {
   });
 });
 
-// Start server
+// Start server - bind to port first, then run checks
 const startServer = async () => {
   try {
-    // Test Supabase connection
-    const dbConnected = await testConnection();
-    if (!dbConnected) {
-      console.error('⚠️  Warning: Supabase connection failed. Please check your configuration.');
-    }
-
-    // Verify email configuration
-    const emailConfigured = await verifyEmailConfig();
-    if (!emailConfigured) {
-      console.error('⚠️  Warning: Email configuration failed. Please check your SMTP settings.');
-    }
-
-    // Start listening
-    app.listen(PORT, () => {
+    // Start listening on 0.0.0.0 for Render FIRST
+    const server = app.listen(PORT, '0.0.0.0', () => {
       console.log('='.repeat(50));
       console.log(`🚀 Server running on port ${PORT}`);
       console.log(`🌍 Environment: ${process.env.NODE_ENV}`);
@@ -123,6 +111,21 @@ const startServer = async () => {
       console.log(`  GET  /api/health`);
       console.log('='.repeat(50));
     });
+
+    // Run health checks AFTER server is listening
+    setTimeout(async () => {
+      // Test Supabase connection
+      const dbConnected = await testConnection();
+      if (!dbConnected) {
+        console.error('⚠️  Warning: Supabase connection failed. Please check your configuration.');
+      }
+
+      // Verify email configuration
+      const emailConfigured = await verifyEmailConfig();
+      if (!emailConfigured) {
+        console.error('⚠️  Warning: Email configuration failed. Please check your SMTP settings.');
+      }
+    }, 1000);
 
   } catch (error) {
     console.error('Failed to start server:', error);

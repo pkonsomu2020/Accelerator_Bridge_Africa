@@ -7,13 +7,19 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_KEY
 );
 
-// Test Supabase connection
+// Test Supabase connection with timeout
 const testConnection = async () => {
   try {
-    const { data, error } = await supabase
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('Connection timeout')), 5000)
+    );
+    
+    const connectionPromise = supabase
       .from('contact_forms')
       .select('count')
       .limit(1);
+    
+    const { data, error } = await Promise.race([connectionPromise, timeoutPromise]);
     
     if (error && error.code !== 'PGRST116') { // PGRST116 = table doesn't exist yet
       throw error;
