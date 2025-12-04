@@ -24,13 +24,11 @@ const submitPartnershipForm = async (req, res) => {
 
     // Upload logo to Supabase Storage if file was uploaded
     let logoUrl = null;
-    let logoFileName = null;
     
     if (req.file) {
-      // Generate unique filename
       const timestamp = Date.now();
       const sanitizedName = req.file.originalname.replace(/\s+/g, '-');
-      logoFileName = `${timestamp}-${sanitizedName}`;
+      const logoFileName = `${timestamp}-${sanitizedName}`;
       
       console.log('📤 Uploading logo to Supabase Storage:', logoFileName);
       
@@ -77,7 +75,7 @@ const submitPartnershipForm = async (req, res) => {
 
     const insertedRecord = data[0];
 
-    // Prepare email attachments - for Supabase Storage, we include logo URL in email
+    // Prepare email attachments - logo is in Supabase Storage
     const attachments = [];
 
     // Send email notification to admin
@@ -121,8 +119,6 @@ const submitPartnershipForm = async (req, res) => {
                 ${additionalInfo.replace(/\n/g, '<br>')}
               </div>
             ` : ''}
-
-            ${logoPath ? '<p style="margin-top: 20px;"><strong>Logo:</strong> Attached to this email</p>' : ''}
           </div>
           <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #6b7280; font-size: 12px;">
             <p>This email was sent from The Accelerator Bridge partnership form.</p>
