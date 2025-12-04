@@ -22,10 +22,41 @@ const submitPartnershipForm = async (req, res) => {
       });
     }
 
-    // Get logo path if file was uploaded
-    const logoPath = req.file ? `/uploads/${req.file.filename}` : null;
+    // Upload logo to Supabase Storage if file was uploaded
+    let logoUrl = null;
+    let logoFileName = null;
+    
+    if (req.file) {
+      // Generate unique filename
+      const timestamp = Date.now();
+      const sanitizedName = req.file.originalname.replace(/\s+/g, '-');
+      logoFileName = `${timestamp}-${sanitizedName}`;
+      
+      console.log('📤 Uploading logo to Supabase Storage:', logoFileName);
+      
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('partnership-logos')
+        .upload(logoFileName, req.file.buffer, {
+          contentType: req.file.mimetype,
+          cacheControl: '3600',
+          upsert: false
+        });
 
-    // Insert into Supabase
+      if (uploadError) {
+        console.error('❌ Logo upload error:', uploadError);
+        throw new Error(`Logo upload failed: ${uploadError.message}`);
+      }
+
+      // Get public URL
+      const { data: urlData } = supabase.storage
+        .from('partnership-logos')
+        .getPublicUrl(logoFileName);
+      
+      logoUrl = urlData.publicUrl;
+      console.log('✅ Logo uploaded successfully:', logoUrl);
+    }
+
+    // Insert into Supabase database
     const { data, error} = await supabase
       .from('partnership_forms')
       .insert([{
@@ -34,7 +65,7 @@ const submitPartnershipForm = async (req, res) => {
         email,
         phone_number: phoneNumber || null,
         organization_description: organizationDescription,
-        logo_path: logoPath,
+        logo_url: logoUrl,
         partnership_description: partnershipDescription,
         additional_info: additionalInfo || null
       }])
@@ -46,14 +77,8 @@ const submitPartnershipForm = async (req, res) => {
 
     const insertedRecord = data[0];
 
-    // Prepare email attachments if logo was uploaded
+    // Prepare email attachments - for Supabase Storage, we include logo URL in email
     const attachments = [];
-    if (req.file) {
-      attachments.push({
-        filename: req.file.originalname,
-        path: req.file.path
-      });
-    }
 
     // Send email notification to admin
     const mailOptions = {
@@ -71,6 +96,14 @@ const submitPartnershipForm = async (req, res) => {
             ${contactPersonName ? `<p><strong>Contact Person:</strong> ${contactPersonName}</p>` : ''}
             <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
             ${phoneNumber ? `<p><strong>Phone:</strong> ${phoneNumber}</p>` : ''}
+            
+            ${logoUrl ? `
+              <div style="margin: 20px 0;">
+                <p><strong>Logo:</strong></p>
+                <img src="${logoUrl}" alt="Organization Logo" style="max-width: 200px; border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px;">
+                <p><a href="${logoUrl}" target="_blank" style="color: #4F46E5;">View Full Size</a></p>
+              </div>
+            ` : ''}
             
             <h3 style="color: #1F2937; margin-top: 20px;">Organization Description</h3>
             <div style="background-color: #f3f4f6; padding: 15px; border-radius: 5px;">
@@ -109,7 +142,7 @@ const submitPartnershipForm = async (req, res) => {
         id: insertedRecord.id,
         organizationName,
         email,
-        logoPath
+        logoUrl
       }
     });
 
