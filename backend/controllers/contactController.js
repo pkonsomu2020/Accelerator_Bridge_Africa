@@ -1,5 +1,5 @@
 const { supabase } = require('../config/supabase');
-const { transporter } = require('../config/email');
+const { sendEmail } = require('../config/email');
 
 // Submit contact form
 const submitContactForm = async (req, res) => {
@@ -64,16 +64,39 @@ const submitContactForm = async (req, res) => {
       }
     });
 
-    // Send emails asynchronously (don't wait for them)
+    // Send emails asynchronously using Resend
     setImmediate(async () => {
       try {
         // Send email notification to admin
-        await transporter.sendMail(mailOptions);
+        await sendEmail({
+          from: `Accelerator Bridge <${process.env.EMAIL_FROM}>`,
+          to: process.env.EMAIL_TO,
+          subject: `New Contact Form Submission - ${name}`,
+          html: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+              <h2 style="color: #4F46E5; border-bottom: 2px solid #4F46E5; padding-bottom: 10px;">
+                New Contact Form Submission
+              </h2>
+              <div style="margin: 20px 0;">
+                <p><strong>Name:</strong> ${name}</p>
+                <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+                <p><strong>Message:</strong></p>
+                <div style="background-color: #f3f4f6; padding: 15px; border-radius: 5px; margin-top: 10px;">
+                  ${description.replace(/\n/g, '<br>')}
+                </div>
+              </div>
+              <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #6b7280; font-size: 12px;">
+                <p>This email was sent from The Accelerator Bridge contact form.</p>
+                <p>Date: ${new Date().toLocaleString()}</p>
+              </div>
+            </div>
+          `
+        });
         console.log('✅ Admin notification email sent for contact:', name);
 
         // Send confirmation email to user
-        const confirmationMailOptions = {
-          from: process.env.EMAIL_FROM,
+        await sendEmail({
+          from: `Accelerator Bridge <${process.env.EMAIL_FROM}>`,
           to: email,
           subject: 'Thank you for contacting The Accelerator Bridge',
           html: `
@@ -98,12 +121,11 @@ const submitContactForm = async (req, res) => {
               </div>
             </div>
           `
-        };
-
-        await transporter.sendMail(confirmationMailOptions);
+        });
         console.log('✅ Confirmation email sent to user:', email);
       } catch (emailError) {
         console.error('❌ Error sending emails:', emailError.message);
+        console.log('ℹ️  Form data saved successfully. Email notification failed but user submission is recorded.');
         // Don't throw - emails are not critical for form submission
       }
     });

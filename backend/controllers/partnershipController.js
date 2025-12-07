@@ -1,5 +1,5 @@
 const { supabase } = require('../config/supabase');
-const { transporter } = require('../config/email');
+const { sendEmail } = require('../config/email');
 
 // Submit partnership form
 const submitPartnershipForm = async (req, res) => {
@@ -75,61 +75,6 @@ const submitPartnershipForm = async (req, res) => {
 
     const insertedRecord = data[0];
 
-    // Prepare email attachments - logo is in Supabase Storage
-    const attachments = [];
-
-    // Send email notification to admin
-    const mailOptions = {
-      from: process.env.EMAIL_FROM,
-      to: process.env.EMAIL_TO,
-      subject: `New Partnership Request - ${organizationName}`,
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #4F46E5; border-bottom: 2px solid #4F46E5; padding-bottom: 10px;">
-            New Partnership Request
-          </h2>
-          <div style="margin: 20px 0;">
-            <h3 style="color: #1F2937;">Organization Details</h3>
-            <p><strong>Organization Name:</strong> ${organizationName}</p>
-            ${contactPersonName ? `<p><strong>Contact Person:</strong> ${contactPersonName}</p>` : ''}
-            <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
-            ${phoneNumber ? `<p><strong>Phone:</strong> ${phoneNumber}</p>` : ''}
-            
-            ${logoUrl ? `
-              <div style="margin: 20px 0;">
-                <p><strong>Logo:</strong></p>
-                <img src="${logoUrl}" alt="Organization Logo" style="max-width: 200px; border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px;">
-                <p><a href="${logoUrl}" target="_blank" style="color: #4F46E5;">View Full Size</a></p>
-              </div>
-            ` : ''}
-            
-            <h3 style="color: #1F2937; margin-top: 20px;">Organization Description</h3>
-            <div style="background-color: #f3f4f6; padding: 15px; border-radius: 5px;">
-              ${organizationDescription.replace(/\n/g, '<br>')}
-            </div>
-
-            <h3 style="color: #1F2937; margin-top: 20px;">Partnership Description</h3>
-            <div style="background-color: #f3f4f6; padding: 15px; border-radius: 5px;">
-              ${partnershipDescription.replace(/\n/g, '<br>')}
-            </div>
-
-            ${additionalInfo ? `
-              <h3 style="color: #1F2937; margin-top: 20px;">Additional Information</h3>
-              <div style="background-color: #f3f4f6; padding: 15px; border-radius: 5px;">
-                ${additionalInfo.replace(/\n/g, '<br>')}
-              </div>
-            ` : ''}
-          </div>
-          <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #6b7280; font-size: 12px;">
-            <p>This email was sent from The Accelerator Bridge partnership form.</p>
-            <p>Submission ID: ${insertedRecord.id}</p>
-            <p>Date: ${new Date().toLocaleString()}</p>
-          </div>
-        </div>
-      `,
-      attachments
-    };
-
     // Respond immediately to frontend
     res.status(201).json({
       success: true,
@@ -142,16 +87,64 @@ const submitPartnershipForm = async (req, res) => {
       }
     });
 
-    // Send emails asynchronously (don't wait for them)
+    // Send emails asynchronously using Resend
     setImmediate(async () => {
       try {
         // Send email notification to admin
-        await transporter.sendMail(mailOptions);
+        await sendEmail({
+          from: `Accelerator Bridge <${process.env.EMAIL_FROM}>`,
+          to: process.env.EMAIL_TO,
+          subject: `New Partnership Request - ${organizationName}`,
+          html: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+              <h2 style="color: #4F46E5; border-bottom: 2px solid #4F46E5; padding-bottom: 10px;">
+                New Partnership Request
+              </h2>
+              <div style="margin: 20px 0;">
+                <h3 style="color: #1F2937;">Organization Details</h3>
+                <p><strong>Organization Name:</strong> ${organizationName}</p>
+                ${contactPersonName ? `<p><strong>Contact Person:</strong> ${contactPersonName}</p>` : ''}
+                <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+                ${phoneNumber ? `<p><strong>Phone:</strong> ${phoneNumber}</p>` : ''}
+                
+                ${logoUrl ? `
+                  <div style="margin: 20px 0;">
+                    <p><strong>Logo:</strong></p>
+                    <img src="${logoUrl}" alt="Organization Logo" style="max-width: 200px; border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px;">
+                    <p><a href="${logoUrl}" target="_blank" style="color: #4F46E5;">View Full Size</a></p>
+                  </div>
+                ` : ''}
+                
+                <h3 style="color: #1F2937; margin-top: 20px;">Organization Description</h3>
+                <div style="background-color: #f3f4f6; padding: 15px; border-radius: 5px;">
+                  ${organizationDescription.replace(/\n/g, '<br>')}
+                </div>
+
+                <h3 style="color: #1F2937; margin-top: 20px;">Partnership Description</h3>
+                <div style="background-color: #f3f4f6; padding: 15px; border-radius: 5px;">
+                  ${partnershipDescription.replace(/\n/g, '<br>')}
+                </div>
+
+                ${additionalInfo ? `
+                  <h3 style="color: #1F2937; margin-top: 20px;">Additional Information</h3>
+                  <div style="background-color: #f3f4f6; padding: 15px; border-radius: 5px;">
+                    ${additionalInfo.replace(/\n/g, '<br>')}
+                  </div>
+                ` : ''}
+              </div>
+              <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #6b7280; font-size: 12px;">
+                <p>This email was sent from The Accelerator Bridge partnership form.</p>
+                <p>Submission ID: ${insertedRecord.id}</p>
+                <p>Date: ${new Date().toLocaleString()}</p>
+              </div>
+            </div>
+          `
+        });
         console.log('✅ Admin notification email sent for partnership:', organizationName);
 
         // Send confirmation email to partner
-        const confirmationMailOptions = {
-          from: process.env.EMAIL_FROM,
+        await sendEmail({
+          from: `Accelerator Bridge <${process.env.EMAIL_FROM}>`,
           to: email,
           subject: 'Thank you for your Partnership Interest - The Accelerator Bridge',
           html: `
@@ -192,12 +185,11 @@ const submitPartnershipForm = async (req, res) => {
               </div>
             </div>
           `
-        };
-
-        await transporter.sendMail(confirmationMailOptions);
+        });
         console.log('✅ Confirmation email sent to partner:', email);
       } catch (emailError) {
         console.error('❌ Error sending emails:', emailError.message);
+        console.log('ℹ️  Form data saved successfully. Email notification failed but partnership submission is recorded.');
         // Don't throw - emails are not critical for form submission
       }
     });

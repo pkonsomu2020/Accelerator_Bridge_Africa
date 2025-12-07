@@ -1,38 +1,43 @@
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 require('dotenv').config();
 
-// Create transporter with better timeout settings
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: parseInt(process.env.SMTP_PORT),
-  secure: process.env.SMTP_SECURE === 'true',
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS
-  },
-  tls: {
-    rejectUnauthorized: false
-  },
-  connectionTimeout: 30000, // 30 seconds
-  greetingTimeout: 30000,
-  socketTimeout: 30000
-});
+// Initialize Resend client
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Verify transporter configuration with timeout
+// Send email using Resend
+const sendEmail = async ({ from, to, subject, html }) => {
+  try {
+    const { data, error } = await resend.emails.send({
+      from,
+      to,
+      subject,
+      html
+    });
+
+    if (error) {
+      throw error;
+    }
+
+    return { success: true, data };
+  } catch (error) {
+    console.error('❌ Resend email error:', error);
+    throw error;
+  }
+};
+
+// Verify email configuration
 const verifyEmailConfig = async () => {
   try {
-    const timeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('Email verification timeout')), 10000)
-    );
-    
-    await Promise.race([transporter.verify(), timeoutPromise]);
-    console.log('✅ Email configuration verified successfully');
+    if (!process.env.RESEND_API_KEY) {
+      throw new Error('RESEND_API_KEY not configured');
+    }
+    console.log('✅ Resend email configuration verified');
     return true;
   } catch (error) {
-    console.error('⚠️  Email verification skipped:', error.message);
+    console.error('⚠️  Email configuration warning:', error.message);
     console.log('📧 Email will be tested when first message is sent');
     return false;
   }
 };
 
-module.exports = { transporter, verifyEmailConfig };
+module.exports = { sendEmail, verifyEmailConfig };
