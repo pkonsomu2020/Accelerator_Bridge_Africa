@@ -5,7 +5,7 @@ import { Check, Sparkles, Users, Ticket } from "lucide-react";
 const pricingPackages = [
   {
     name: "Individual Pass",
-    price: "1,500",
+    price: "2,000",
     currency: "KES",
     description: "Full access to the 5-week program",
     features: [
@@ -22,7 +22,7 @@ const pricingPackages = [
   },
   {
     name: "Team Package",
-    price: "6,000",
+    price: "8,500",
     currency: "KES",
     description: "Bring your team of 5 and save together",
     features: [
@@ -40,7 +40,7 @@ const pricingPackages = [
   },
   {
     name: "Live Event Only",
-    price: "500",
+    price: "700",
     currency: "KES",
     description: "Attend the final live event",
     features: [
