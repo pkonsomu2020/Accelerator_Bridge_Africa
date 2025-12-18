@@ -16,6 +16,7 @@ const Index = () => {
       <Navbar />
       <Hero />
       <CountdownTimer />
+      <Pricing />
       <section id="journey">
         <Journey />
       </section>
