@@ -82,7 +82,7 @@ export const CountdownTimer = () => {
         <div className="text-center">
           <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-4">
             <Zap className="w-4 h-4" />
-            Limited Spots Available
+            Invite your friends and join the movement
           </div>
           <p className="text-muted-foreground">
             Secure your spot now and be part of the next generation of tech leaders
