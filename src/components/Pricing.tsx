@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Check, Sparkles, Users, Ticket } from "lucide-react";
+import { Check, Users, Ticket } from "lucide-react";
 
 const pricingPackages = [
   {
@@ -131,6 +131,7 @@ export const Pricing = () => {
                   {/* CTA Button */}
                   <Button
                     className="w-full rounded-full font-semibold gradient-button text-white"
+                    onClick={() => window.open('https://vabu.app/l/2o1vn', '_blank')}
                   >
                     Get Tickets
                   </Button>

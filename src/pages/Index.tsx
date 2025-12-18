@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
+import { CountdownTimer } from "@/components/CountdownTimer";
 import { Journey } from "@/components/Journey";
 import { TechTracks } from "@/components/TechTracks";
 import { Features } from "@/components/Features";
@@ -14,6 +15,7 @@ const Index = () => {
     <div className="min-h-screen">
       <Navbar />
       <Hero />
+      <CountdownTimer />
       <section id="journey">
         <Journey />
       </section>
