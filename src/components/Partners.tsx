@@ -8,6 +8,22 @@ export const Partners = () => {
       name: "SecretStartups",
       logo: "/PARTNERS/secretstartups_logo.jpeg",
     },
+    {
+      name: "SecretStartups",
+      logo: "/PARTNERS/chiromo_forge_community.jpeg",
+    },
+    {
+      name: "SecretStartups",
+      logo: "/PARTNERS/digital_leap_africa.jpeg",
+    },
+    {
+      name: "SecretStartups",
+      logo: "/PARTNERS/techhut_community.jpeg",
+    },
+    {
+      name: "SecretStartups",
+      logo: "/PARTNERS/gdg_maseno_university.jpeg",
+    },
   ];
 
   // Duplicate the partners array to create seamless loop

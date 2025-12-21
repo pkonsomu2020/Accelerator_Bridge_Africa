@@ -18,19 +18,19 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
 
-    /* Vibrant blue primary */
-    --primary: 217 91% 60%;
+    /* Orange primary */
+    --primary: 39 100% 50%;
     --primary-foreground: 0 0% 100%;
 
-    /* Teal secondary */
-    --secondary: 180 85% 50%;
+    /* Deep orange secondary */
+    --secondary: 20 100% 50%;
     --secondary-foreground: 0 0% 100%;
 
     --muted: 210 40% 96%;
     --muted-foreground: 215 16% 47%;
 
-    /* Purple accent */
-    --accent: 270 75% 60%;
+    /* Golden orange accent */
+    --accent: 42 100% 50%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
@@ -38,21 +38,21 @@ All colors MUST be HSL.
 
     --border: 214 32% 91%;
     --input: 214 32% 91%;
-    --ring: 217 91% 60%;
+    --ring: 39 100% 50%;
 
     --radius: 0.75rem;
     
-    /* Gradient colors matching the provided image: pink/magenta → purple → blue → teal */
-    --gradient-pink: 320 85% 65%;
-    --gradient-magenta: 310 80% 60%;
-    --gradient-purple: 270 75% 60%;
-    --gradient-blue: 217 91% 60%;
-    --gradient-teal: 180 85% 50%;
+    /* Orange gradient colors matching the poster: deep orange → orange → golden orange */
+    --gradient-deep-orange: 20 100% 50%;
+    --gradient-orange: 39 100% 50%;
+    --gradient-golden: 42 100% 50%;
+    --gradient-light-orange: 35 100% 60%;
+    --gradient-warm-orange: 25 100% 55%;
     
-    /* Custom gradients */
-    --gradient-primary: linear-gradient(180deg, hsl(var(--gradient-pink)) 0%, hsl(var(--gradient-purple)) 33%, hsl(var(--gradient-blue)) 66%, hsl(var(--gradient-teal)) 100%);
-    --gradient-hero: linear-gradient(180deg, hsl(var(--gradient-pink)) 0%, hsl(var(--gradient-magenta)) 25%, hsl(var(--gradient-purple)) 50%, hsl(var(--gradient-blue)) 75%, hsl(var(--gradient-teal)) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(var(--gradient-purple)) 0%, hsl(var(--gradient-teal)) 100%);
+    /* Custom orange gradients */
+    --gradient-primary: linear-gradient(180deg, hsl(var(--gradient-deep-orange)) 0%, hsl(var(--gradient-orange)) 50%, hsl(var(--gradient-golden)) 100%);
+    --gradient-hero: linear-gradient(180deg, hsl(var(--gradient-deep-orange)) 0%, hsl(var(--gradient-warm-orange)) 25%, hsl(var(--gradient-orange)) 50%, hsl(var(--gradient-light-orange)) 75%, hsl(var(--gradient-golden)) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(var(--gradient-orange)) 0%, hsl(var(--gradient-golden)) 100%);
     
     /* Glass effect for light theme */
     --glass-bg: hsl(0 0% 100% / 0.8);
@@ -64,38 +64,38 @@ All colors MUST be HSL.
   }
 
   .dark {
-    /* Dark theme colors */
-    --background: 222 47% 11%;
+    /* Dark theme colors - matching the dark poster background */
+    --background: 195 100% 6%;  /* Dark teal/navy like the poster */
     --foreground: 210 40% 98%;
 
-    --card: 222 47% 15%;
+    --card: 195 80% 8%;  /* Slightly lighter dark teal for cards */
     --card-foreground: 210 40% 98%;
 
-    --popover: 222 47% 15%;
+    --popover: 195 80% 8%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 217 91% 60%;
+    --primary: 39 100% 50%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 180 85% 50%;
+    --secondary: 20 100% 50%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 195 60% 12%;  /* Dark teal muted */
+    --muted-foreground: 195 20% 65%;
 
-    --accent: 270 75% 60%;
+    --accent: 42 100% 50%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 217 33% 25%;
-    --input: 217 33% 25%;
-    --ring: 217 91% 60%;
+    --border: 195 40% 15%;  /* Dark teal border */
+    --input: 195 40% 15%;
+    --ring: 39 100% 50%;
 
     /* Glass effect for dark theme */
-    --glass-bg: hsl(222 47% 15% / 0.8);
-    --glass-border: hsl(217 33% 25%);
+    --glass-bg: hsl(195 80% 8% / 0.8);
+    --glass-border: hsl(195 40% 15%);
   }
 
 }
@@ -134,11 +134,11 @@ All colors MUST be HSL.
   
   .gradient-text-hero {
     background: linear-gradient(180deg, 
-      hsl(var(--gradient-pink)) 0%, 
-      hsl(var(--gradient-magenta)) 25%, 
-      hsl(var(--gradient-purple)) 50%, 
-      hsl(var(--gradient-blue)) 75%, 
-      hsl(var(--gradient-teal)) 100%
+      hsl(var(--gradient-deep-orange)) 0%, 
+      hsl(var(--gradient-warm-orange)) 25%, 
+      hsl(var(--gradient-orange)) 50%, 
+      hsl(var(--gradient-light-orange)) 75%, 
+      hsl(var(--gradient-golden)) 100%
     );
     -webkit-background-clip: text;
     background-clip: text;
@@ -149,19 +149,19 @@ All colors MUST be HSL.
   
   .gradient-bg {
     background: linear-gradient(180deg, 
-      hsl(var(--gradient-pink)) 0%, 
-      hsl(var(--gradient-magenta)) 25%, 
-      hsl(var(--gradient-purple)) 50%, 
-      hsl(var(--gradient-blue)) 75%, 
-      hsl(var(--gradient-teal)) 100%
+      hsl(var(--gradient-deep-orange)) 0%, 
+      hsl(var(--gradient-warm-orange)) 25%, 
+      hsl(var(--gradient-orange)) 50%, 
+      hsl(var(--gradient-light-orange)) 75%, 
+      hsl(var(--gradient-golden)) 100%
     );
   }
   
   .gradient-button {
     background: linear-gradient(135deg, 
-      hsl(var(--gradient-pink)) 0%, 
-      hsl(var(--gradient-purple)) 50%, 
-      hsl(var(--gradient-teal)) 100%
+      hsl(var(--gradient-deep-orange)) 0%, 
+      hsl(var(--gradient-orange)) 50%, 
+      hsl(var(--gradient-golden)) 100%
     );
     color: white;
   }

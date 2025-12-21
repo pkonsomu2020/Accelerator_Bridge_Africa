@@ -57,6 +57,14 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        // Custom orange gradient colors
+        orange: {
+          deep: "#ff5400",
+          DEFAULT: "#ffa800", 
+          golden: "#ffb000",
+          light: "#ffcc33",
+          warm: "#ff7700",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
